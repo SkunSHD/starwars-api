@@ -10,20 +10,20 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import CardFilm from './CardFilm';
+import CardFilm from './Film';
 import Grid from "@material-ui/core/Grid";
-import CardCharacters from './CardCharacters';
-import CardPlanets from './CardPlanets';
-import CardSpecies from './CardSpecies';
-import CardStarships from './CardStarships';
-import CardVehicles from './CardVehicles';
+import Characters from './Characters';
+import Planets from './Planets';
+import Species from './Species';
+import Starships from './Starships';
+import Vehicles from './Vehicles';
 
 const components = {
-  vehicles: CardVehicles,
-  characters: CardCharacters,
-  history: CardStarships,
-  planets: CardPlanets,
-  species: CardSpecies,
+  vehicles: Vehicles,
+  characters: Characters,
+  history: Starships,
+  planets: Planets,
+  species: Species,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -33,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
-  },
-  grid_item: {
-    margin: 10
   },
 }));
 
@@ -76,20 +73,23 @@ export default function FilmDetailsDialog(props) {
             if (!SpecificComponent || !Array.isArray(links)) return null;
             return (
               <ListItem key={categoryName}>
-                <Grid container>
-                  <Grid 
-                    item
-                    container
-                    direction="row"
-                    justify="center"
-                    alignItems="stretch"
-                  >
+                <Grid 
+                  item 
+                  container
+                  spacing={2}
+                >
+                  <Grid item xs={12}>
                     <h3>{categoryName}</h3>
-                    {links.map(link => {
-                      return (
-                        <SpecificComponent key={link} link={link} />
-                      )
-                    })}
+                    <Divider />
+                    </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    container
+                    justify="center"
+                    spacing={2}
+                  >
+                    {links.map(link => <SpecificComponent key={link} link={link} />)}
                   </Grid>
                 </Grid>
               </ListItem>

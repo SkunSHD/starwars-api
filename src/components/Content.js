@@ -9,7 +9,7 @@ import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 
 class Content extends React.Component {
   state = {
-    film: [],
+    search: [],
     films: [],
     error: '',
     isDescending: true,
@@ -21,6 +21,14 @@ class Content extends React.Component {
 
   get filmsSorted() {
     return this.state.films.sort(this.state.isDescending ? this.descendingSort : this.ascendingSort);
+  }
+
+  get searchSorted() {
+    return this.state.search.sort(this.state.isDescending ? this.descendingSort : this.ascendingSort);
+  }
+
+  get isSearchActive() {
+    return this.state.search.length !== 0;
   }
 
   fetchFilms = () => {    
@@ -37,24 +45,24 @@ class Content extends React.Component {
   handleSearchFilm = (event) => {
     if (!event.target.value) {
       this.setState({
-        film: [],
+        search: [],
         error: '',
       });
       return;
     };
 
-    const film = this.state.films.find(film => film.title === event.target.value);
+    const filmsFiltered = this.state.films.filter(film => film.title.includes(event.target.value));
     
     let newState;
-    if (!film) {
+    if (filmsFiltered.length) {
       newState = {
-        error: 'Film not found',
-        film: [],
+        error: '',
+        search: filmsFiltered,
       };
     } else {
       newState = {
-        error: '',
-        film: [film],
+        error: 'Film not found',
+        search: [],
       };
     }
     this.setState(newState);
@@ -109,15 +117,15 @@ class Content extends React.Component {
         <div className={classes.content}>
           <Grid
             container
-            direction="row"
             justify="center"
             alignItems="stretch"
+            spacing={2}
           >
-            {this.state.film.length !== 0 || this.state.error
-              ? this.state.film
-              : this.filmsSorted.map(film => (
+            {!this.state.error && (
+              this.isSearchActive ? this.searchSorted : this.filmsSorted).map(film => (
                 <FilmDetailsDialog key={film.title} film={film} />
-              ))}
+              )
+            )}
           </Grid>
         </div>
       </div>
