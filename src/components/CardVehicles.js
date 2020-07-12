@@ -5,6 +5,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import { getData } from '../utils';
 
 const useStyles = makeStyles({
   root: {
@@ -24,22 +25,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CardVehicles(props) {
+export default function CardVehicles({ link, handleClickOpen }) {
   const classes = useStyles();
   const [vehicle, setVehicle] = useState({});
-
-  useEffect(() => {
-    const getData = () => {
-      fetch(props.link)
-        .then(response => response.json())
-        .then(info => setVehicle(info))
-    };
-    getData();
-  }, []);
+  useEffect(() => getData(link, setVehicle), []);
 
   return (
     <Grid item className={classes.grid_item}>
-      <Card className={classes.root} onClick={props.handleClickOpen}>
+      <Card className={classes.root} onClick={handleClickOpen}>
         <CardActionArea>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
