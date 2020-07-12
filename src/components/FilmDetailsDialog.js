@@ -17,6 +17,7 @@ import Planets from './Planets';
 import Species from './Species';
 import Starships from './Starships';
 import Vehicles from './Vehicles';
+import { capitalizeFirstLetter } from '../utils';
 
 const components = {
   vehicles: Vehicles,
@@ -79,7 +80,7 @@ export default function FilmDetailsDialog(props) {
                   spacing={2}
                 >
                   <Grid item xs={12}>
-                    <h3>{categoryName}</h3>
+                    <Typography variant="h5" gutterBottom>{capitalizeFirstLetter(categoryName)}</Typography>
                     <Divider />
                     </Grid>
                   <Grid
